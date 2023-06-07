@@ -13,7 +13,8 @@ export const MyPosts = () => {
             </div>
             <div>New post</div>
             <div className={'posts'}>
-             <Post/>
+             <Post message={'Hi! How are you?'}/>
+             <Post message={" It's my first post "}/>
             </div>
         </div>
     );
