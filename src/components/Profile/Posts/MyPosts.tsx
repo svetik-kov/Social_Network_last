@@ -13,8 +13,8 @@ export const MyPosts = () => {
             </div>
             <div>New post</div>
             <div className={'posts'}>
-             <Post message={'Hi! How are you?'}/>
-             <Post message={" It's my first post "}/>
+             <Post message={'Hi! How are you?'} likesCount={'3'}/>
+             <Post message={" It's my first post "} likesCount={'44'}/>
             </div>
         </div>
     );
