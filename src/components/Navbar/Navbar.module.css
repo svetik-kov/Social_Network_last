@@ -3,10 +3,12 @@
     background-color: lightgoldenrodyellow;
     width: 100px;
     font-weight: bold;
+    padding: 20px;
 }
-.item{
+.item a{
     color: green;
+    text-decoration: none;
 }
-.item.active{
+.item a.active{
     color: darkgoldenrod;
 }
