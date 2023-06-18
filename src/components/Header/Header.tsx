@@ -3,7 +3,7 @@ import s from './Header.module.css'
 
 export const Header = () => {
     return  <header className={s.header}>
-        <img src={'https://w7.pngwing.com/pngs/526/232/png-transparent-earth-airplane-earth-3d-computer-graphics-globe-computer-wallpaper.png'}/>
+        <img src={'https://avatars.mds.yandex.net/i?id=527e018bc5f48920cf4464a46fbafaa396046f4d-8152091-images-thumbs&n=13'}/>
     </header >
     
 };
