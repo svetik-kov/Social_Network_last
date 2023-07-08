@@ -5,7 +5,7 @@ import {message} from 'antd';
 
 type DialogItemType={
     name:string
-    id:string
+    id:number
 }
 const DialogItem=(props:DialogItemType)=>{
     let path=`/dialogs/${props.id}`
@@ -17,29 +17,39 @@ const DialogItem=(props:DialogItemType)=>{
 }
 
 type MessageType={
-    title:string
+    message:string
 }
 const Message=(props:MessageType)=>{
     return(
-        <div className={s.message}>{props.title}</div>
+        <div className={s.message}>{props.message}</div>
     )
 }
 export const Dialogs = () => {
+    let dialogsData=[
+        {id:1, name:'Svetlana'},
+        {id:2, name:'Natasha'},
+        {id:3, name:'Irina'},
+        {id:4, name:'Tanya'},
+        {id:5, name:'Zlata'},
+        {id:6, name:'Marina'},
+    ]
+    let messagesData=[
+        {id:1, message:'Hello!'},
+        {id:2, message:'How are you?'},
+        {id:3, message:'Yo!'},
+    ]
     return (
         <div className={s.dialogs}>
             <div className={s.dialogItems}>
-                <DialogItem name={'Svetlana'} id={'1'}/>
-                <DialogItem name={'Natasha'} id={'2'}/>
-                <DialogItem name={'Irina'} id={'3'}/>
-                <DialogItem name={'Tanya'} id={'4'}/>
-                <DialogItem name={'Zlata'} id={'5'}/>
-                <DialogItem name={'Marina'} id={'6'}/>
+                <DialogItem name={dialogsData[0].name} id={dialogsData[0].id}/>
+                <DialogItem name={dialogsData[1].name} id={dialogsData[1].id}/>
+
 
             </div>
         <div className={s.messages}>
-            <Message title={'Hello!'}/>
-            <Message title={'How are you?'}/>
-            <Message title={'Yo!'}/>
+            <Message message={messagesData[0].message}/>
+            <Message message={messagesData[1].message}/>
+
         </div>
 
         </div>
