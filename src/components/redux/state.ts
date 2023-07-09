@@ -45,4 +45,10 @@ let state={
     },
     sidebar:{}
 }
+
+export const addPost=(newMessage:string)=>{
+
+    let newPost={id:5, message:newMessage,likesCount:0}
+    state.profilePage.posts.push(newPost)
+}
 export default state

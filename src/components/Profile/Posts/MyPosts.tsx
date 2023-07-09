@@ -6,16 +6,17 @@ import {PostType} from '../../redux/state';
 
 type MyPosts={
     posts:PostType[]
+    addPost:(newMessage:string)=>void
 }
 export const MyPosts = (props:MyPosts) => {
 
     let postsElements=props.posts.map(p=> <Post message={p.message} likesCount={p.likesCount}/>)
 
-    let newPostElement=React.useRef<HTMLTextAreaElement|null>(null)
+    let newPostElement=React.useRef<HTMLTextAreaElement>(null)
 
     const addPost=()=>{
             let text=newPostElement.current?.value
-            alert(text)
+            props.addPost(text!)
 
     }
     return (

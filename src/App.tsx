@@ -5,10 +5,11 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {Profile} from "./components/Profile/Profile";
 import {Dialogs} from './components/Dialogs/Dialogs';
 import {BrowserRouter, Route} from 'react-router-dom';
-import {StateType} from './components/redux/state';
+import {addPost, StateType} from './components/redux/state';
 
 type AppType={
     state:StateType
+    addPost:(newMessage:string)=>void
 }
 function App(props:AppType) {
 
@@ -23,6 +24,7 @@ function App(props:AppType) {
             /> } />
             <Route path={'/profile'} render={()=><Profile
                 state={props.state.profilePage}
+                addPost={props.addPost}
             />} />
         </div>
     </div>
