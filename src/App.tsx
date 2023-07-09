@@ -14,10 +14,10 @@ function App() {
        <Header/>
        <Navbar/>
         <div className={'app-wrapper-content'}>
-            <Route exact  path={'/dialogs'} component={Dialogs} />
-            <Route path={'/profile'} component={Profile} />
-             {/* <Profile/>*/}
-           {/* <Dialogs/>*/}
+            {/*<Route exact  path={'/dialogs'} component={Dialogs} />
+            <Route path={'/profile'} component={Profile} />*/}
+            <Route exact  path={'/dialogs'} render={()=><Dialogs/>} />
+            <Route path={'/profile'} render={()=><Profile/>} />
         </div>
     </div>
       </BrowserRouter>
