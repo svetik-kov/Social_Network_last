@@ -18,15 +18,10 @@ function App(props:AppType) {
        <Header/>
        <Navbar/>
         <div className={'app-wrapper-content'}>
-            {/*<Route exact  path={'/dialogs'} component={Dialogs} />
-            <Route path={'/profile'} component={Profile} />*/}
             <Route exact  path={'/dialogs'} render={()=><Dialogs
-                /*dialogs={props.appState.messagesPage.dialogs}
-                messages={props.appState.messagesPage.messages}*/
             state={props.state.messagesPage}
             /> } />
             <Route path={'/profile'} render={()=><Profile
-                //posts={props.appState.profilePage.posts}
                 state={props.state.profilePage}
             />} />
         </div>

@@ -15,19 +15,7 @@ type DialogsType={
 }
 
 export const Dialogs = (props:DialogsType) => {
-   /* let dialogs=[
-        {id:1, name:'Svetlana'},
-        {id:2, name:'Natasha'},
-        {id:3, name:'Irina'},
-        {id:4, name:'Tanya'},
-        {id:5, name:'Zlata'},
-        {id:6, name:'Marina'},
-    ]
-    let messages=[
-        {id:1, message:'Hello!'},
-        {id:2, message:'How are you?'},
-        {id:3, message:'Yo!'},
-    ]*/
+
     let dialogsElements=props.state.dialogs.map(d=><DialogItem  name={d.name} id={d.id}/>)
     let messagesElements=props.state.messages.map(m=> <Message message={m.message}/>)
     return (
