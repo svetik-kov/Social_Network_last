@@ -1,24 +1,25 @@
 import React, {useRef} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
-import {PostType} from '../../redux/state';
+import {PostType} from '../../../redux/state';
 
 
-type MyPosts={
-    posts:PostType[]
-    addPost:(newMessage:string)=>void
+type MyPosts = {
+    posts: PostType[]
+    addPost: (newMessage: string) => void
 }
-export const MyPosts = (props:MyPosts) => {
+export const MyPosts = (props: MyPosts) => {
 
-    let postsElements=props.posts.map(p=> <Post message={p.message} likesCount={p.likesCount}/>)
+    let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
 
-    let newPostElement=React.useRef<HTMLTextAreaElement>(null)
+    let newPostElement = React.useRef<HTMLTextAreaElement>(null)
 
-    const addPost=()=>{
-            let text=newPostElement.current?.value
-            props.addPost(text!)
-
-    }
+    const addPost = () => {
+        if (newPostElement.current!==null){
+        let text = newPostElement.current?.value
+        props.addPost(text!)
+        newPostElement.current.value=''
+    }}
     return (
         <div className={s.postsBlock}>
 
