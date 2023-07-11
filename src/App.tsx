@@ -5,7 +5,7 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {Profile} from "./components/Profile/Profile";
 import {Dialogs} from './components/Dialogs/Dialogs';
 import {BrowserRouter, Route} from 'react-router-dom';
-import {addPost, StateType, updateNewPostText} from './redux/state';
+import { StateType} from './redux/state';
 
 type AppType={
     state:StateType
@@ -26,7 +26,7 @@ function App(props:AppType) {
             <Route path={'/profile'} render={()=><Profile
                 profilePage={props.state.profilePage}
                 addPost={props.addPost}
-                updateNewPostText={ updateNewPostText}
+                updateNewPostText={ props.updateNewPostText}
             />} />
         </div>
     </div>
