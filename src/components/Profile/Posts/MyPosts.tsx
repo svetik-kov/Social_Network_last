@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
-import {ActionType, PostType} from '../../../redux/state';
+import {ActionType, addPostAC, PostType, updateNewPostAC} from '../../../redux/state';
 
 
 type MyPosts = {
@@ -9,8 +9,9 @@ type MyPosts = {
     newPostText: string
     /*addPost: () => void
     updateNewPostText: (newText: string) => void*/
-    dispatch:(action:ActionType)=>void
+    dispatch: (action: ActionType) => void
 }
+
 export const MyPosts = (props: MyPosts) => {
 
     let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
@@ -19,19 +20,21 @@ export const MyPosts = (props: MyPosts) => {
 
     const addPost = () => {
         if (newPostElement.current !== null) {
-           /* props.addPost()*/
-            const action={type:'ADD-POST'} as const
-            props.dispatch(action)
-
+            /* props.addPost()*/
+            /* const action={type:'ADD-POST'} as const
+             props.dispatch(action)*/
+            props.dispatch(addPostAC())
         }
     }
     const onPostChange = () => {
         let text = newPostElement.current?.value
-       /* props.updateNewPostText(text!)*/
-        if (text){
-        let action={type:'UPDATE-NEW-POST-TEXT',newText:text} as const
-        props.dispatch(action)
-    }}
+        /* props.updateNewPostText(text!)*/
+        if (text) {
+            /*let action={type:'UPDATE-NEW-POST-TEXT',newText:text} as const
+            props.dispatch(action)*/
+            props.dispatch(updateNewPostAC(text))
+        }
+    }
 
     return (
         <div className={s.postsBlock}>

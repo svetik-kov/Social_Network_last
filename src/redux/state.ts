@@ -1,3 +1,6 @@
+const ADD_POST='ADD-POST'
+const UPDATE_NEW_POST_TEXT='UPDATE-NEW-POST-TEXT'
+
 export type StoreType = {
     _state: StateType
     _callSubscribe: () => void,
@@ -11,12 +14,28 @@ export type StoreType = {
 
 export type ActionType=AddPostActionType | UpdateNewPostTextActionType
 
-type AddPostActionType={
+/*type AddPostActionType={
     type:'ADD-POST'
 }
 type UpdateNewPostTextActionType={
     type:'UPDATE-NEW-POST-TEXT'
     newText:string
+}*/
+type AddPostActionType=ReturnType<typeof addPostAC>
+type UpdateNewPostTextActionType=ReturnType<typeof updateNewPostAC>
+
+//type AddPostACType = ReturnType<typeof addPostAC>
+//type UpdateNewPostACType = ReturnType<typeof updateNewPostAC>
+export const addPostAC = () => {
+    return {
+        type: ADD_POST
+    } as const
+}
+
+export const updateNewPostAC = (text: string) => {
+    return {
+        type: UPDATE_NEW_POST_TEXT, newText: text
+    } as const
 }
 
 let store:StoreType = {
