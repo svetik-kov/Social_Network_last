@@ -1,31 +1,28 @@
-const ADD_POST='ADD-POST'
-const UPDATE_NEW_POST_TEXT='UPDATE-NEW-POST-TEXT'
+const ADD_POST = 'ADD-POST'
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
+const SEND_MESSAGE = 'SEND-MESSAGE'
 
 export type StoreType = {
     _state: StateType
     _callSubscribe: () => void,
-    getState:()=>StateType
+    getState: () => StateType
     subscribe: (observer: () => void) => void
 
-   /* addPost: () => void
-    updateNewPostText: (newText: string) => void*/
-   dispatch:(action:ActionType)=>void
+    dispatch: (action: ActionType) => void
 }
 
-export type ActionType=AddPostActionType | UpdateNewPostTextActionType
+export type ActionType = AddPostActionType
+    | UpdateNewPostTextActionType
+    | UpdateNewMessageBodyActionType
+    | SendMessageActionType
 
-/*type AddPostActionType={
-    type:'ADD-POST'
-}
-type UpdateNewPostTextActionType={
-    type:'UPDATE-NEW-POST-TEXT'
-    newText:string
-}*/
-type AddPostActionType=ReturnType<typeof addPostAC>
-type UpdateNewPostTextActionType=ReturnType<typeof updateNewPostAC>
+type AddPostActionType = ReturnType<typeof addPostAC>
+type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostAC>
+type UpdateNewMessageBodyActionType = ReturnType<typeof updateNewMessageBodyAC>
+type SendMessageActionType = ReturnType<typeof sendMessageAC>
 
-//type AddPostACType = ReturnType<typeof addPostAC>
-//type UpdateNewPostACType = ReturnType<typeof updateNewPostAC>
+
 export const addPostAC = () => {
     return {
         type: ADD_POST
@@ -37,8 +34,18 @@ export const updateNewPostAC = (text: string) => {
         type: UPDATE_NEW_POST_TEXT, newText: text
     } as const
 }
+export const updateNewMessageBodyAC = (body: string) => {
+    return {
+        type: UPDATE_NEW_MESSAGE_BODY, body: body
+    } as const
+}
+export const sendMessageAC = () => {
+    return {
+        type: SEND_MESSAGE
+    } as const
+}
 
-let store:StoreType = {
+let store: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -61,7 +68,8 @@ let store:StoreType = {
                 {id: 1, message: 'Hello!'},
                 {id: 2, message: 'How are you?'},
                 {id: 3, message: 'Yo!'},
-            ]
+            ],
+            newMessageBody: ''
         },
         sidebar: {}
     },
@@ -69,40 +77,47 @@ let store:StoreType = {
         console.log('state')
     },
 
-    getState(){
+    getState() {
         return this._state
     },
     subscribe(observer: () => void) {
         this._callSubscribe = observer
     },
 
-  /*  addPost() {
+    /*  addPost() {
 
-        let newPost = {id: 5, message: this._state.profilePage.newPostText, likesCount: 0}
-       this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-       this._callSubscribe()
-    },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-       this._callSubscribe()
-    },*/
+          let newPost = {id: 5, message: this._state.profilePage.newPostText, likesCount: 0}
+         this._state.profilePage.posts.push(newPost)
+          this._state.profilePage.newPostText = ''
+         this._callSubscribe()
+      },
+      updateNewPostText(newText: string) {
+          this._state.profilePage.newPostText = newText
+         this._callSubscribe()
+      },*/
 
-    dispatch(action:ActionType){
-       if (action.type==='ADD-POST') {
-           let newPost = {
-               id: 5,
-               message: this._state.profilePage.newPostText,
-               likesCount: 0}
-           this._state.profilePage.posts.push(newPost)
-           this._state.profilePage.newPostText = ''
-           this._callSubscribe()
-       } else {
-           if (action.type==='UPDATE-NEW-POST-TEXT'){
-               this._state.profilePage.newPostText = action.newText
-               this._callSubscribe()
-           }
-       }
+    dispatch(action: ActionType) {
+        if (action.type === ADD_POST) {
+            let newPost = {
+                id: 5,
+                message: this._state.profilePage.newPostText,
+                likesCount: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ''
+            this._callSubscribe()
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscribe()
+        } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
+            this._state.messagesPage.newMessageBody = action.body
+            this._callSubscribe()
+        } else if (action.type === SEND_MESSAGE) {
+            let body = this._state.messagesPage.newMessageBody
+            this._state.messagesPage.newMessageBody = ''
+            this._state.messagesPage.messages.push({id: 6, message: body})
+            this._callSubscribe()
+        }
     }
 
 }
@@ -128,52 +143,11 @@ export type StateType = {
     }
     messagesPage: {
         dialogs: DialogType[],
-        messages: MessageType[]
+        messages: MessageType[],
+        newMessageBody: string
     }
     sidebar: {}
 }
 
-/*let state={
-    profilePage:{
-        posts: [
-            {id:1, message:'Hi! How are you?',likesCount:3},
-            {id:2, message:'It\'s my first post',likesCount:44},
-        ],
-        newPostText:''
-    },
-    messagesPage:{
-        dialogs:[
-            {id:1, name:'Svetlana'},
-            {id:2, name:'Natasha'},
-            {id:3, name:'Irina'},
-            {id:4, name:'Tanya'},
-            {id:5, name:'Zlata'},
-            {id:6, name:'Marina'},
-        ],
-        messages:[
-            {id:1, message:'Hello!'},
-            {id:2, message:'How are you?'},
-            {id:3, message:'Yo!'},
-        ]
-    },
-    sidebar:{}
-}
-let  rerenderEntireTree=()=>{
-    console.log('state')
-}
-export const addPost=()=>{
-
-    let newPost={id:5, message:state.profilePage.newPostText,likesCount:0}
-    state.profilePage.posts.push(newPost)
-    state.profilePage.newPostText=''
-    rerenderEntireTree()
-}
-export const updateNewPostText=(newText:string)=>{
-    state.profilePage.newPostText=newText
-    rerenderEntireTree()
-}
-export const subscribe=(observer:()=>void)=>{
-rerenderEntireTree=observer
-}*/
 
 export default store
