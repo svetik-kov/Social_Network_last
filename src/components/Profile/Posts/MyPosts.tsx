@@ -1,17 +1,14 @@
 import React, {useRef} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
-import { PostType} from '../../../redux/store';
-import {ActionProfileReducerType} from '../../../redux/profile-reducer';
-import {ActionDialogsReducerType, addPostAC, updateNewPostAC} from '../../../redux/dialogs-reducer';
+import {PostType} from '../../../redux/store';
 
 
 type MyPosts = {
     posts: PostType[]
     newPostText: string
-    /*addPost: () => void
-    updateNewPostText: (newText: string) => void*/
-    dispatch: (action: ActionProfileReducerType | ActionDialogsReducerType) => void
+    updateNewPostText: (text: string) => void
+    addPost: () => void
 }
 
 export const MyPosts = (props: MyPosts) => {
@@ -20,22 +17,23 @@ export const MyPosts = (props: MyPosts) => {
 
     let newPostElement = React.useRef<HTMLTextAreaElement>(null)
 
-    const addPost = () => {
-        if (newPostElement.current !== null) {
-            /* props.addPost()*/
-            /* const action={type:'ADD-POST'} as const
-             props.dispatch(action)*/
+    const onAddPost = () => {
+        props.addPost()
+        /*if (newPostElement.current !== null) {
+            /!* props.addPost()*!/
+            /!* const action={type:'ADD-POST'} as const
+             props.dispatch(action)*!/
             props.dispatch(addPostAC())
-        }
+        }*/
     }
     const onPostChange = () => {
         let text = newPostElement.current?.value
-        /* props.updateNewPostText(text!)*/
-        if (text) {
-            /*let action={type:'UPDATE-NEW-POST-TEXT',newText:text} as const
-            props.dispatch(action)*/
-            props.dispatch(updateNewPostAC(text))
-        }
+        props.updateNewPostText(text!)
+        /* if (text) {
+             /!*let action={type:'UPDATE-NEW-POST-TEXT',newText:text} as const
+             props.dispatch(action)*!/
+             props.dispatch(updateNewPostAC(text))
+         }*/
     }
 
     return (
@@ -47,15 +45,12 @@ export const MyPosts = (props: MyPosts) => {
                     <textarea onChange={onPostChange} value={props.newPostText} ref={newPostElement}/>
                 </div>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={onAddPost}>Add post</button>
                 </div>
             </div>
             <div>New post</div>
             <div className={s.posts}>
                 {postsElements}
-                {/*<Post message={postData[0].message} likesCount={postData[0].likesCount}/>
-                <Post message={postData[1].message} likesCount={postData[1].likesCount}/>*/}
-
             </div>
         </div>
     );

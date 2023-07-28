@@ -3,8 +3,8 @@ import s from './Profile.module.css'
 import {MyPosts} from './Posts/MyPosts';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {ActionType, PostType} from '../../redux/store';
-
-
+import {MyPostsContainer} from './Posts/MyPostsContainer';
+import {StoreType} from '../../redux/redux-store';
 
 
 type ProfileType = {
@@ -12,20 +12,20 @@ type ProfileType = {
         posts: PostType[],
         newPostText: string
     }
-   /* addPost: () => void
-    updateNewPostText:(newText:string)=>void*/
-    dispatch:(action: ActionType)=>void
+    /* addPost: () => void
+     updateNewPostText:(newText:string)=>void*/
+    store:StoreType
+    dispatch: (action: ActionType) => void
 }
 export const Profile = (props: ProfileType) => {
     return (
         <div>
             <ProfileInfo/>
-            < MyPosts
-                posts={props.profilePage.posts}
-                newPostText={props.profilePage.newPostText}
-               /* addPost={props.addPost}
-                updateNewPostText={props.updateNewPostText}*/
-                dispatch={props.dispatch}
+            < MyPostsContainer
+                //posts={props.profilePage.posts}
+                //newPostText={props.profilePage.newPostText}
+                store={props.store}
+                //dispatch={props.dispatch}
             />
 
         </div>
