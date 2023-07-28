@@ -1,7 +1,21 @@
-const ADD_POST = 'ADD-POST'
+import {
+    ActionDialogsReducerType,
+    AddPostActionType,
+    dialogsReducer,
+    UpdateNewPostTextActionType
+} from './dialogs-reducer';
+import {
+    ActionProfileReducerType,
+    profileReducer,
+    SendMessageActionType,
+    UpdateNewMessageBodyActionType
+} from './profile-reducer';
+import {sidebarReducer} from './sidebar-reducer';
+
+/*const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
-const SEND_MESSAGE = 'SEND-MESSAGE'
+const SEND_MESSAGE = 'SEND-MESSAGE'*/
 
 export type StoreType = {
     _state: StateType
@@ -16,14 +30,18 @@ export type ActionType = AddPostActionType
     | UpdateNewPostTextActionType
     | UpdateNewMessageBodyActionType
     | SendMessageActionType
+/*export type ActionType = AddPostActionType
+    | UpdateNewPostTextActionType
+    | UpdateNewMessageBodyActionType
+    | SendMessageActionType
 
 type AddPostActionType = ReturnType<typeof addPostAC>
 type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostAC>
 type UpdateNewMessageBodyActionType = ReturnType<typeof updateNewMessageBodyAC>
-type SendMessageActionType = ReturnType<typeof sendMessageAC>
+type SendMessageActionType = ReturnType<typeof sendMessageAC>*/
 
 
-export const addPostAC = () => {
+/*export const addPostAC = () => {
     return {
         type: ADD_POST
     } as const
@@ -33,8 +51,8 @@ export const updateNewPostAC = (text: string) => {
     return {
         type: UPDATE_NEW_POST_TEXT, newText: text
     } as const
-}
-export const updateNewMessageBodyAC = (body: string) => {
+}*/
+/*export const updateNewMessageBodyAC = (body: string) => {
     return {
         type: UPDATE_NEW_MESSAGE_BODY, body: body
     } as const
@@ -43,7 +61,7 @@ export const sendMessageAC = () => {
     return {
         type: SEND_MESSAGE
     } as const
-}
+}*/
 
 let store: StoreType = {
     _state: {
@@ -97,7 +115,11 @@ let store: StoreType = {
       },*/
 
     dispatch(action: ActionType) {
-        if (action.type === ADD_POST) {
+        dialogsReducer(this._state,action)
+        profileReducer(this._state,action)
+        sidebarReducer(this._state,action)
+        this._callSubscribe()
+       /* if (action.type === ADD_POST) {
             let newPost = {
                 id: 5,
                 message: this._state.profilePage.newPostText,
@@ -106,18 +128,22 @@ let store: StoreType = {
             this._state.profilePage.posts.push(newPost)
             this._state.profilePage.newPostText = ''
             this._callSubscribe()
-        } else if (action.type === UPDATE_NEW_POST_TEXT) {
+        }
+        else if (action.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.newText
             this._callSubscribe()
-        } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
+        }
+        else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
             this._state.messagesPage.newMessageBody = action.body
             this._callSubscribe()
-        } else if (action.type === SEND_MESSAGE) {
+        }
+        else if (action.type === SEND_MESSAGE) {
+
             let body = this._state.messagesPage.newMessageBody
             this._state.messagesPage.newMessageBody = ''
             this._state.messagesPage.messages.push({id: 6, message: body})
             this._callSubscribe()
-        }
+        }*/
     }
 
 }

@@ -1,7 +1,9 @@
 import React, {useRef} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
-import {ActionType, addPostAC, PostType, updateNewPostAC} from '../../../redux/state';
+import { PostType} from '../../../redux/state';
+import {ActionProfileReducerType} from '../../../redux/profile-reducer';
+import {ActionDialogsReducerType, addPostAC, updateNewPostAC} from '../../../redux/dialogs-reducer';
 
 
 type MyPosts = {
@@ -9,7 +11,7 @@ type MyPosts = {
     newPostText: string
     /*addPost: () => void
     updateNewPostText: (newText: string) => void*/
-    dispatch: (action: ActionType) => void
+    dispatch: (action: ActionProfileReducerType | ActionDialogsReducerType) => void
 }
 
 export const MyPosts = (props: MyPosts) => {

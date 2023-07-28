@@ -5,6 +5,7 @@ import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {ActionType, PostType} from '../../redux/state';
 
 
+
 type ProfileType = {
     profilePage: {
         posts: PostType[],
@@ -12,7 +13,7 @@ type ProfileType = {
     }
    /* addPost: () => void
     updateNewPostText:(newText:string)=>void*/
-    dispatch:(action:ActionType)=>void
+    dispatch:(action: ActionType)=>void
 }
 export const Profile = (props: ProfileType) => {
     return (
