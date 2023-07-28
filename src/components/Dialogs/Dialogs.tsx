@@ -2,22 +2,14 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
-import {  StoreType} from '../../redux/state';
+import {  StoreType} from '../../redux/store';
 import {sendMessageAC, updateNewMessageBodyAC} from '../../redux/profile-reducer';
 
 
 
 type DialogsType={
-   // dialogs:DialogType[]
-   // messages:MessageType[]
- /*   state:{
-        dialogs:DialogType[]
-        messages:MessageType[]
-        newMessageBody: string
-    }*/
-    store:StoreType
-    //dispatch:(action:ActionType)=>void
-}
+       store:StoreType
+    }
 
 export const Dialogs = (props:DialogsType) => {
 let state=props.store.getState().messagesPage

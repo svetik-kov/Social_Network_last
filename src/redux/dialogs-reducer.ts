@@ -1,22 +1,29 @@
-import {ActionType, StateType} from './state';
+import {ActionType} from './store';
 
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 
-
-export const dialogsReducer = (state:StateType,action:ActionType) => {
+let initialState={
+    posts: [
+        {id: 1, message: 'Hi! How are you?', likesCount: 3},
+        {id: 2, message: 'It\'s my first post', likesCount: 44},
+    ],
+    newPostText: ''
+}
+type InitialStateType=typeof initialState
+export const profileReducer = (state:InitialStateType=initialState,action:ActionType) => {
     switch (action.type) {
         case ADD_POST:
             let newPost = {
                 id: 5,
-                message: state.profilePage.newPostText,
+                message: state.newPostText,
                 likesCount: 0
             }
-            state.profilePage.posts.push(newPost)
-            state.profilePage.newPostText = ''
+            state.posts.push(newPost)
+            state.newPostText = ''
             return state;
         case UPDATE_NEW_POST_TEXT:
-            state.profilePage.newPostText = action.newText
+            state.newPostText = action.newText
            return state
         default:
             return state

@@ -1,7 +1,9 @@
 import React from 'react';
-import { StateType} from './state';
+import { StateType} from './store';
 
-export  const sidebarReducer = (state:StateType,action:any) => {
+let initialState={}
+type InitialStateType=typeof initialState
+export  const sidebarReducer = (state:InitialStateType=initialState,action:any) => {
 
 
 
