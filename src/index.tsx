@@ -5,17 +5,17 @@ import './index.css';
 import App from './App';
 import {BrowserRouter} from 'react-router-dom';
 import store, {StateType} from './redux/redux-store';
+import StoreContext, {Provider} from './StoreContext';
 
 
  let rerenderEntireTree=(state:StateType)=>{
     ReactDOM.render(
         <BrowserRouter>
-            <App
-                state={state}
-                dispatch={store.dispatch.bind(store)}
-                store={store}
-               /* addPost={store.addPost.bind(store)}
-                updateNewPostText={store.updateNewPostText.bind(store)}*/ />
+           <Provider store={store}>
+               <App/>
+           </Provider>
+
+
         </BrowserRouter>,
         document.getElementById('root')
     );
