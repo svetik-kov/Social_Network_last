@@ -3,12 +3,11 @@ import s from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
 
-import {sendMessageAC, updateNewMessageBodyAC} from '../../redux/profile-reducer';
-import {StoreType} from '../../redux/redux-store';
-import {DialogType, MessageType} from '../../redux/store';
+
+
 import {DialogsPropsType} from './DialogsContainer';
 
-type MessagesPageType={
+/*type MessagesPageType={
     dialogs: DialogType[],
     messages: MessageType[],
     newMessageBody: string
@@ -18,7 +17,7 @@ type DialogsType = {
     updateNewMessageBody:(body:string)=>void
     sendMessage:()=>void
     messagesPage: MessagesPageType
-}
+}*/
 
 export const Dialogs = (props: DialogsPropsType) => {
     let state = props.messagesPage

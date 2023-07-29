@@ -1,6 +1,5 @@
 import React from 'react';
-import {PostType} from '../../../redux/store';
-import {ActionProfileReducerType, sendMessageAC, updateNewMessageBodyAC} from '../../../redux/profile-reducer';
+
 import {ActionDialogsReducerType, addPostAC, InitialStateType, updateNewPostAC} from '../../../redux/dialogs-reducer';
 import {MyPosts} from './MyPosts';
 import {StateType, StoreType} from '../../../redux/redux-store';

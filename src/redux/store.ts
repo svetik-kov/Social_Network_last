@@ -12,7 +12,7 @@ import {
 import {sidebarReducer} from './sidebar-reducer';
 
 
-export type StoreType = {
+ type StoreType = {
     _state: StateType
     _callSubscribe: () => void,
     getState: () => StateType
@@ -21,7 +21,7 @@ export type StoreType = {
     dispatch: (action: ActionType) => void
 }
 
-export type ActionType = AddPostActionType
+ type ActionType = AddPostActionType
     | UpdateNewPostTextActionType
     | UpdateNewMessageBodyActionType
     | SendMessageActionType
@@ -113,20 +113,20 @@ let store: StoreType = {
 }
 
 
-export type PostType = {
+ type PostType = {
     id: number
     message: string
     likesCount: number
 }
-export type DialogType = {
+ type DialogType = {
     id: number
     name: string
 }
-export type MessageType = {
+ type MessageType = {
     id: number
     message: string
 }
-export type StateType = {
+ type StateType = {
     profilePage: {
         posts: PostType[],
         newPostText: string

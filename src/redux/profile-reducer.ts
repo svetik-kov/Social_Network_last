@@ -1,9 +1,22 @@
 import React from 'react';
-import {ActionType, StateType} from './store';
+import {AddPostActionType, UpdateNewPostTextActionType} from './dialogs-reducer';
+export type ActionType = AddPostActionType
+    | UpdateNewPostTextActionType
+    | UpdateNewMessageBodyActionType
+    | SendMessageActionType
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
 const SEND_MESSAGE = 'SEND-MESSAGE'
 
+
+type DialogType = {
+    id: number
+    name: string
+}
+type MessageType = {
+    id: number
+    message: string
+}
 let initialState= {
     dialogs: [
         {id: 1, name: 'Svetlana'},
@@ -12,16 +25,16 @@ let initialState= {
         {id: 4, name: 'Tanya'},
         {id: 5, name: 'Zlata'},
         {id: 6, name: 'Marina'},
-    ],
+    ] as DialogType[],
     messages: [
         {id: 1, message: 'Hello!'},
         {id: 2, message: 'How are you?'},
         {id: 3, message: 'Yo!'},
-    ],
+    ] as MessageType[],
     newMessageBody: ''
 }
 export type InitialStateType=typeof initialState
-export const dialogsReducer = (state:InitialStateType=initialState,action:ActionType) => {
+export const dialogsReducer = (state:InitialStateType=initialState,action:ActionType):InitialStateType => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
             state.newMessageBody = action.body
