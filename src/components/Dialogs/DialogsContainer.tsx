@@ -1,40 +1,35 @@
-import React, {ChangeEvent} from 'react';
-import s from './Dialogs.module.css'
-import {DialogItem} from './DialogItem/DialogItem';
-import {Message} from './Message/Message';
+import React from 'react';
 
-import {sendMessageAC, updateNewMessageBodyAC} from '../../redux/profile-reducer';
-import {StoreType} from '../../redux/redux-store';
+
+import {InitialStateType, sendMessageAC, updateNewMessageBodyAC} from '../../redux/profile-reducer';
+import {StateType} from '../../redux/redux-store';
 import {Dialogs} from './Dialogs';
-import StoreContext from '../../StoreContext';
+import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
 
-
-type DialogsType = {
-    //store: StoreType
+type MapStateToPropsType={
+    messagesPage:InitialStateType
 }
-
-export const DialogsContainer = (props: DialogsType) => {
-
-    return (
-<StoreContext.Consumer>
-    {
-    (store)=>{
-        let state = store.getState().messagesPage
-
-
-        const onSendMessageClick = () => {
-           store.dispatch(sendMessageAC())
-        }
-        const onNewMessageChange = (body: string) => {
-            store.dispatch(updateNewMessageBodyAC(body))
-        }
-        return(
-            <Dialogs updateNewMessageBody={onNewMessageChange} sendMessage={onSendMessageClick} messagesPage={state}/>
-        )
+type MapDispatchToPropsType={
+    updateNewMessageBody:(body:string)=>void
+    sendMessage:()=>void
+}
+export type DialogsPropsType=MapStateToPropsType & MapDispatchToPropsType
+let mapStateToProps=(state:StateType):MapStateToPropsType=>{
+    return{
+        messagesPage:state.messagesPage
     }
+}
+let mapDispatchToProps=(dispatch:Dispatch):MapDispatchToPropsType=>{
+    return {
+        updateNewMessageBody:(body:string)=>{
+            dispatch(updateNewMessageBodyAC(body))
+        },
+        sendMessage:()=>{
+            dispatch(sendMessageAC())
+        }
     }
-</StoreContext.Consumer>
+}
+export const DialogsContainer=connect(mapStateToProps,mapDispatchToProps)(Dialogs);
 
-    );
-};
 

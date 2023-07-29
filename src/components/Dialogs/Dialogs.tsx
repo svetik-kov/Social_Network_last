@@ -6,6 +6,7 @@ import {Message} from './Message/Message';
 import {sendMessageAC, updateNewMessageBodyAC} from '../../redux/profile-reducer';
 import {StoreType} from '../../redux/redux-store';
 import {DialogType, MessageType} from '../../redux/store';
+import {DialogsPropsType} from './DialogsContainer';
 
 type MessagesPageType={
     dialogs: DialogType[],
@@ -19,7 +20,7 @@ type DialogsType = {
     messagesPage: MessagesPageType
 }
 
-export const Dialogs = (props: DialogsType) => {
+export const Dialogs = (props: DialogsPropsType) => {
     let state = props.messagesPage
 
     let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>)

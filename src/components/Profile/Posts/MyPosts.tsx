@@ -2,16 +2,17 @@ import React, {useRef} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
 import {PostType} from '../../../redux/store';
+import {MyPostType} from './MyPostsContainer';
 
 
-type MyPosts = {
+/*type MyPosts = {
     posts: PostType[]
     newPostText: string
     updateNewPostText: (text: string) => void
     addPost: () => void
-}
+}*/
 
-export const MyPosts = (props: MyPosts) => {
+export const MyPosts = (props: MyPostType) => {
 
     let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
 
