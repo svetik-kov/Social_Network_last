@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-import {InitialStateType, sendMessageAC, updateNewMessageBodyAC} from '../../redux/profile-reducer';
+import {InitialStateType, sendMessageAC, updateNewMessageBodyAC} from '../../redux/dialogs-reducer';
 import {StateType} from '../../redux/redux-store';
 import {Dialogs} from './Dialogs';
 import {connect} from 'react-redux';
@@ -30,6 +30,7 @@ let mapDispatchToProps=(dispatch:Dispatch):MapDispatchToPropsType=>{
         }
     }
 }
+////
 export const DialogsContainer=connect(mapStateToProps,mapDispatchToProps)(Dialogs);
 
 

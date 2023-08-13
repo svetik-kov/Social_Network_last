@@ -1,51 +1,69 @@
-import {ActionType} from './profile-reducer';
+import React from 'react';
+import {AddPostActionType, UpdateNewPostTextActionType} from './profile-reducer';
+export type ActionType = AddPostActionType
+    | UpdateNewPostTextActionType
+    | UpdateNewMessageBodyActionType
+    | SendMessageActionType
+
+const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
+const SEND_MESSAGE = 'SEND-MESSAGE'
 
 
-const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
-
-let initialState={
-    posts: [
-        {id: 1, message: 'Hi! How are you?', likesCount: 3},
-        {id: 2, message: 'It\'s my first post', likesCount: 44},
-    ],
-    newPostText: ''
+type DialogType = {
+    id: number
+    name: string
+}
+type MessageType = {
+    id: number
+    message: string
+}
+let initialState= {
+    dialogs: [
+        {id: 1, name: 'Svetlana'},
+        {id: 2, name: 'Natasha'},
+        {id: 3, name: 'Irina'},
+        {id: 4, name: 'Tanya'},
+        {id: 5, name: 'Zlata'},
+        {id: 6, name: 'Marina'},
+    ] as DialogType[],
+    messages: [
+        {id: 1, message: 'Hello!'},
+        {id: 2, message: 'How are you?'},
+        {id: 3, message: 'Yo!'},
+    ] as MessageType[],
+    newMessageBody: ''
 }
 export type InitialStateType=typeof initialState
-export const profileReducer = (state:InitialStateType=initialState,action:ActionType):InitialStateType => {
+export const dialogsReducer = (state:InitialStateType=initialState,action:ActionType):InitialStateType => {
     switch (action.type) {
-        case ADD_POST:
-            let newPost = {
-                id: 5,
-                message: state.newPostText,
-                likesCount: 0
-            }
-            state.posts.push(newPost)
-            state.newPostText = ''
+        case UPDATE_NEW_MESSAGE_BODY:
+            state.newMessageBody = action.body
             return state;
-        case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newText
-           return state
+        case SEND_MESSAGE:
+            let body = state.newMessageBody
+            state.newMessageBody = ''
+            state.messages.push({id: 6, message: body})
+            return state
         default:
             return state
     }
 
 };
 
-export type ActionDialogsReducerType = AddPostActionType
-    | UpdateNewPostTextActionType
+export type ActionProfileReducerType =
+    | UpdateNewMessageBodyActionType
+    | SendMessageActionType
 
 
-export type AddPostActionType = ReturnType<typeof addPostAC>
-export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostAC>
-export const addPostAC = () => {
+export type UpdateNewMessageBodyActionType = ReturnType<typeof updateNewMessageBodyAC>
+export type SendMessageActionType = ReturnType<typeof sendMessageAC>
+export const updateNewMessageBodyAC = (body: string) => {
     return {
-        type: ADD_POST
+        type: UPDATE_NEW_MESSAGE_BODY, body: body
     } as const
 }
-
-export const updateNewPostAC = (text: string) => {
+export const sendMessageAC = () => {
     return {
-        type: UPDATE_NEW_POST_TEXT, newText: text
+        type: SEND_MESSAGE
     } as const
 }

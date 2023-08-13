@@ -2,13 +2,13 @@ import {
     AddPostActionType, profileReducer,
 
     UpdateNewPostTextActionType
-} from './dialogs-reducer';
+} from './profile-reducer';
 import {
     dialogsReducer,
 
     SendMessageActionType,
     UpdateNewMessageBodyActionType
-} from './profile-reducer';
+} from './dialogs-reducer';
 import {sidebarReducer} from './sidebar-reducer';
 
 
