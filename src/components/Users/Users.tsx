@@ -1,16 +1,16 @@
 import React from 'react';
 import {UsersContainerType} from './UsersContainer';
 import s from './Users.module.css'
+import axios from 'axios';
+import userPhoto from '../../assetc/images/avatar.png'
 
 export const Users = (props: UsersContainerType) => {
     if (props.users.length===0){
-        props.setUsers(
-            [
-                {id: 1,photoUser:'https://flomaster.club/uploads/posts/2021-12/1638885351_4-flomaster-club-p-risunki-parnei-v-stile-krasivie-risunki-5.jpg', followed:false, fullName: 'Dmitry', status:'I am a boss', location:{city:'Minsk',country:'Belarus'}},
-                {id: 2,photoUser:'https://99px.ru/sstorage/56/2012/02/image_561402122132546240443.jpg', followed:true, fullName: 'Masha', status:'I am a boss too', location:{city:'Moscow',country:'Russia'}},
-                {id: 3,photoUser:'https://avatars.mds.yandex.net/i?id=da87b9f958b1cdb0bf6d514ea48ac92c8f1a141c-8257511-images-thumbs&n=13', followed:false, fullName: 'Sasha', status:'I am a boss too', location:{city:'Kiev',country:'Ukraine'}},
-            ]
-        )
+        axios.get('https://social-network.samuraijs.com/api/1.0/users')
+            .then((response)=>{
+                props.setUsers(response.data.items)
+            })
+
     }
 
     return (
@@ -18,7 +18,7 @@ export const Users = (props: UsersContainerType) => {
             {props.users.map(u => <div key={u.id}>
 <span>
     <div className={s.usersPhoto}>
-        <img src={u.photoUser}/>
+        <img src={u.photos.small !==null?u.photos.small:userPhoto}/>
 
     </div>
     <div>
@@ -30,10 +30,10 @@ export const Users = (props: UsersContainerType) => {
 </span>
                 <span>
     <span>
-        <div>{u.fullName}</div><div> {u.status}</div>
+        <div>{u.name}</div><div> {u.status}</div>
     </span>
     <span>
-        <div>{u.location.city}</div><div>{u.location.country}</div>
+        <div>{"u.location.city"}</div><div>{"u.location.country"}</div>
     </span>
 </span>
             </div>)}
