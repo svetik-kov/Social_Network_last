@@ -1,13 +1,12 @@
 import {
-    AddPostActionType, profileReducer,
+    ActionProfileReducerType,
 
-    UpdateNewPostTextActionType
+    profileReducer,
 } from './profile-reducer';
 import {
-    dialogsReducer,
+    ActionDialogsReducerType,
 
-    SendMessageActionType,
-    UpdateNewMessageBodyActionType
+    dialogsReducer,
 } from './dialogs-reducer';
 import {sidebarReducer} from './sidebar-reducer';
 
@@ -21,10 +20,10 @@ import {sidebarReducer} from './sidebar-reducer';
     dispatch: (action: ActionType) => void
 }
 
- type ActionType = AddPostActionType
-    | UpdateNewPostTextActionType
-    | UpdateNewMessageBodyActionType
-    | SendMessageActionType
+ type ActionType =
+     ActionProfileReducerType
+    | ActionDialogsReducerType
+
 
 
 let store: StoreType = {
@@ -34,7 +33,8 @@ let store: StoreType = {
                 {id: 1, message: 'Hi! How are you?', likesCount: 3},
                 {id: 2, message: 'It\'s my first post', likesCount: 44},
             ],
-            newPostText: ''
+            newPostText: '',
+            profile:null
         },
 
         messagesPage: {
@@ -66,48 +66,12 @@ let store: StoreType = {
         this._callSubscribe = observer
     },
 
-    /*  addPost() {
-
-          let newPost = {id: 5, message: this._state.profilePage.newPostText, likesCount: 0}
-         this._state.profilePage.posts.push(newPost)
-          this._state.profilePage.newPostText = ''
-         this._callSubscribe()
-      },
-      updateNewPostText(newText: string) {
-          this._state.profilePage.newPostText = newText
-         this._callSubscribe()
-      },*/
 
     dispatch(action: ActionType) {
-        dialogsReducer(this._state.messagesPage,action)
-        profileReducer(this._state.profilePage,action)
-        sidebarReducer(this._state.sidebar,action)
-        this._callSubscribe()
-       /* if (action.type === ADD_POST) {
-            let newPost = {
-                id: 5,
-                message: this._state.profilePage.newPostText,
-                likesCount: 0
-            }
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = ''
-            this._callSubscribe()
-        }
-        else if (action.type === UPDATE_NEW_POST_TEXT) {
-            this._state.profilePage.newPostText = action.newText
-            this._callSubscribe()
-        }
-        else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-            this._state.messagesPage.newMessageBody = action.body
-            this._callSubscribe()
-        }
-        else if (action.type === SEND_MESSAGE) {
-
-            let body = this._state.messagesPage.newMessageBody
-            this._state.messagesPage.newMessageBody = ''
-            this._state.messagesPage.messages.push({id: 6, message: body})
-            this._callSubscribe()
-        }*/
+        //dialogsReducer(this._state.messagesPage,action)
+        //profileReducer(this._state.profilePage,action)
+        //sidebarReducer(this._state.sidebar,action)
+        //this._callSubscribe()
     }
 
 }
@@ -129,7 +93,8 @@ let store: StoreType = {
  type StateType = {
     profilePage: {
         posts: PostType[],
-        newPostText: string
+        newPostText: string,
+        profile:null
     }
     messagesPage: {
         dialogs: DialogType[],

@@ -6,11 +6,9 @@ import {
     setCurrentPage, setTotalUsersCount,
     setUsers, toggleIsFetching,
     unFollow,
-    UsersPropsType,
     UserType
 } from '../../redux/users-reducer';
-import {Dispatch} from 'redux';
-import preloader from '../../assetc/images/preloader.svg'
+
 
 import {Users} from './Users';
 import axios from 'axios';

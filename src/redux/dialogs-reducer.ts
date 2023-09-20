@@ -1,5 +1,5 @@
 import React from 'react';
-import {AddPostActionType, UpdateNewPostTextActionType} from './profile-reducer';
+import { AddPostActionType, UpdateNewPostTextActionType} from './profile-reducer';
 export type ActionType = AddPostActionType
     | UpdateNewPostTextActionType
     | UpdateNewMessageBodyActionType
@@ -34,7 +34,7 @@ let initialState= {
     newMessageBody: ''
 }
 export type InitialStateType=typeof initialState
-export const dialogsReducer = (state:InitialStateType=initialState,action:ActionType):InitialStateType => {
+export const dialogsReducer = (state:InitialStateType=initialState,action:ActionDialogsReducerType):InitialStateType => {
 
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
@@ -55,7 +55,7 @@ export const dialogsReducer = (state:InitialStateType=initialState,action:Action
 
 };
 
-export type ActionProfileReducerType =
+export type ActionDialogsReducerType =
     | UpdateNewMessageBodyActionType
     | SendMessageActionType
 

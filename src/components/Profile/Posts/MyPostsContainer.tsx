@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {ActionDialogsReducerType, addPostAC, InitialStateType, updateNewPostAC} from '../../../redux/profile-reducer';
+import { addPostAC, InitialStateType, updateNewPostAC} from '../../../redux/profile-reducer';
 import {MyPosts} from './MyPosts';
 import {StateType, StoreType} from '../../../redux/redux-store';
 import {connect} from 'react-redux';
@@ -19,7 +19,8 @@ export type MyPostType=InitialStateType &  MapDispatchPropsType
 let mapStateToProps=(state:StateType):InitialStateType=>{
     return{
         posts:state.profilePage.posts,
-        newPostText:state.profilePage.newPostText
+        newPostText:state.profilePage.newPostText,
+        profile: state.profilePage.profile
     }
 }
 
