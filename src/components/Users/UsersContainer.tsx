@@ -13,6 +13,7 @@ import {
 import {Users} from './Users';
 import axios from 'axios';
 import {Preloader} from '../common/Preloader';
+import { usersAPI} from '../../api/api';
 
 export type UsersContainerType = InitialStateType & MapDispatchToPropsType
 
@@ -31,21 +32,23 @@ class UsersContainer extends React.Component<UsersContainerType, StateType> {
 
     componentDidMount() {
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,{withCredentials: true})
-            .then((response) => {
+        usersAPI.getUsers(this.props.pageSize,this.props.currentPage)
+            .then((data) => {
                 this.props.toggleIsFetching(false)
-                this.props.setUsers(response.data.items)
-                this.props.setTotalUsersCount(response.data.totalCount)
+                this.props.setUsers(data.items)
+                this.props.setTotalUsersCount(data.totalCount)
             })
     }
 
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber)
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,{withCredentials: true})
-            .then((response) => {
+       /* axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,
+            {withCredentials: true})*/
+        usersAPI.getUsers(this.props.pageSize,pageNumber)
+            .then((data) => {
                 this.props.toggleIsFetching(false)
-                this.props.setUsers(response.data.items)
+                this.props.setUsers(data.items)
             })
     }
 
