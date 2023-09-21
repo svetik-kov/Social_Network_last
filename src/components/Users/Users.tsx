@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Users.module.css';
 import userPhoto from '../../assetc/images/avatar.png';
 
-import {UsersPropsType} from '../../redux/users-reducer';
+import { UsersPropsType} from '../../redux/users-reducer';
 import {NavLink} from 'react-router-dom';
 import { usersAPI} from '../../api/api';
 
@@ -10,9 +10,13 @@ type UsersType = {
     onPageChanged: (pageNumber: number) => void
     follow: (userId: number) => void
     unFollow: (userId: number) => void
+    toggleFollowingProgress:(followingInProgress: boolean,userId:number)=>void
+    //followingInProgress:boolean
+    followingInProgress:number[]
+
 }
 
-export const Users = (props: UsersPropsType & UsersType) => {
+export const Users = (props: UsersPropsType & UsersType ) => {
     let pagesCounter = Math.ceil(props.totalUsersCount / props.pageSize)
     let pages = []
     for (let i = 1; i <= pagesCounter; i++) {
@@ -38,7 +42,8 @@ export const Users = (props: UsersPropsType & UsersType) => {
     </div>
     <div>
         {u.followed
-            ? <button onClick={() => {
+            ? <button disabled={props.followingInProgress.some((id)=>id===u.id)} onClick={() => {
+                props.toggleFollowingProgress(true,u.id)
                 usersAPI.unFollowUsers(u.id)
                 // axios.delete(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`,  {
                 //     withCredentials: true,
@@ -49,11 +54,13 @@ export const Users = (props: UsersPropsType & UsersType) => {
                     if (response.data.resultCode===0){
                         props.unFollow(u.id)
                     }
+                        props.toggleFollowingProgress(false,u.id)
                     })
                 // props.unFollow(u.id)
 
             }}>Follow</button>
-            : <button onClick={() => {
+            : <button disabled={props.followingInProgress.some((id)=>id===u.id)} onClick={() => {
+                props.toggleFollowingProgress(true,u.id)
                 usersAPI.followUsers(u.id)
                /* axios.post(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, {},
                     {withCredentials: true,
@@ -65,6 +72,7 @@ export const Users = (props: UsersPropsType & UsersType) => {
                         if (response.data.resultCode===0){
                             props.follow(u.id)
                         }
+                        props.toggleFollowingProgress(false,u.id)
                     })
                // props.follow(u.id)
 
