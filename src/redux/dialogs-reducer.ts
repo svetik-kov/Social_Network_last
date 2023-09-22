@@ -1,5 +1,7 @@
 import React from 'react';
 import { AddPostActionType, UpdateNewPostTextActionType} from './profile-reducer';
+import {Dispatch} from 'redux';
+import {usersAPI} from '../api/api';
 export type ActionType = AddPostActionType
     | UpdateNewPostTextActionType
     | UpdateNewMessageBodyActionType
@@ -72,3 +74,4 @@ export const sendMessageAC = () => {
         type: SEND_MESSAGE
     } as const
 }
+
