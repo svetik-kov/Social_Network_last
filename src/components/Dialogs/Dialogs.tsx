@@ -6,6 +6,7 @@ import {Message} from './Message/Message';
 
 
 import {DialogsPropsType} from './DialogsContainer';
+import {Redirect} from 'react-router-dom';
 
 /*type MessagesPageType={
     dialogs: DialogType[],
@@ -36,6 +37,7 @@ export const Dialogs = (props: DialogsPropsType) => {
         props.updateNewMessageBody( body)
       //  props.store.dispatch(updateNewMessageBodyAC(body))
     }
+    if (!props.isAuth) return < Redirect to={'/login'}/>
     return (
         <div className={s.dialogs}>
             <div className={s.dialogItems}>
