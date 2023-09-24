@@ -48,4 +48,3 @@ export default compose<ComponentType>(
     withAuthRedirect,
 )(Dialogs)
 
-
