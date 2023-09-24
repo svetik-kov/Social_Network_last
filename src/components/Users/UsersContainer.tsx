@@ -13,6 +13,8 @@ import {Users} from './Users';
 import axios from 'axios';
 import {Preloader} from '../common/Preloader';
 import { usersAPI} from '../../api/api';
+import {compose} from 'redux';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 export type UsersContainerType = InitialStateType & MapDispatchToPropsType
 
@@ -105,9 +107,13 @@ const mapStateToProps = (state: StateType): InitialStateType => {
     }
 }*/
 
-export default connect(mapStateToProps, {
+/*export default connect(mapStateToProps, {
     follow,
     unFollow,
     setCurrentPage,
     toggleFollowingProgress,
-    getUsers})(UsersContainer)
+    getUsers})(UsersContainer)*/
+export default compose<React.ComponentType>(
+    withAuthRedirect,
+    connect(mapStateToProps, {follow, unFollow, setCurrentPage, toggleFollowingProgress, getUsers})
+)(UsersContainer)
