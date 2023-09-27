@@ -56,6 +56,7 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
         case SET_USERS:
             return {...state, users: [...action.users, ...state.users]}
         case SET_CURRENT_PAGE:
+
             return {...state, currentPage: action.currentPage}
         case 'SET-TOTAL-USERS-COUNT':
             return {...state, totalUsersCount: action.count}
@@ -108,8 +109,10 @@ export const toggleFollowingProgress = (followingInProgress: boolean,userId:numb
 
 export const getUsers=(pageSize: number, currentPage: number)=>(dispatch:Dispatch)=>{
     dispatch(toggleIsFetching(true))
+
     usersAPI.getUsers(pageSize,currentPage)
         .then((data) => {
+
             dispatch(toggleIsFetching(false))
             dispatch(setUsers(data.items))
             dispatch(setTotalUsersCount(data.totalCount))
