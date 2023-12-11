@@ -3,7 +3,7 @@ import {profileAPI, usersAPI} from '../api/api';
 
 
 const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+//const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_USER_PROFILE = 'SET-USER-PROFILE '
 const SET_STATUS = 'SET-STATUS '
 
@@ -42,7 +42,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
         case ADD_POST: {
             let newPost = {
                 id: 5,
-                message: state.newPostText,
+                message: action.newPostText,
                 likesCount: 0
             }
             return {
@@ -51,9 +51,9 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
                 newPostText: ''
             }
         }
-        case UPDATE_NEW_POST_TEXT: {
+        /*case UPDATE_NEW_POST_TEXT: {
             return {...state, newPostText: action.newText}
-        }
+        }*/
         case 'SET-USER-PROFILE ':
             return {...state, profile: action.profile}
         case 'SET-STATUS ':
@@ -65,26 +65,26 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
 };
 
 export type  ActionProfileReducerType = AddPostActionType
-    | UpdateNewPostTextActionType
+    //| UpdateNewPostTextActionType
     | SetUserProfileActionType
     | SetStatusProfileActionType
 
 
 export type AddPostActionType = ReturnType<typeof addPostAC>
-export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostAC>
+//export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostAC>
 export type SetUserProfileActionType = ReturnType<typeof setUserProfile>
 export type SetStatusProfileActionType = ReturnType<typeof setStatusProfile>
 
-export const addPostAC = () => {
+export const addPostAC = (newPostText:string) => {
     return {
-        type: ADD_POST
+        type: ADD_POST,newPostText
     } as const
 }
-export const updateNewPostAC = (text: string) => {
+/*export const updateNewPostAC = (text: string) => {
     return {
         type: UPDATE_NEW_POST_TEXT, newText: text
     } as const
-}
+}*/
 const setUserProfile = (profile: ProfileType) => {
     return {
         type: SET_USER_PROFILE, profile

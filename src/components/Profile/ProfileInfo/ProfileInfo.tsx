@@ -15,11 +15,11 @@ export const ProfileInfo = (props:ProfileInfoType) => {
     }
     return (
         <div>
-        {/*    //картинка на странице profile
+           {/* картинка на странице profile*/}
             <div>
                 <img
                     src="https://bogatyr.club/uploads/posts/2023-02/1675444895_bogatyr-club-p-kirpichnaya-stena-raznotsvetnaya-fon-vkont-1.jpg"/>
-            </div>*/}
+            </div>
             <div className={s.descriptionBlock}>
                 <img src={props.profile.photos.large}/>
              {/* <ProfileStatus status={'Hello my friendK'}/>*/}

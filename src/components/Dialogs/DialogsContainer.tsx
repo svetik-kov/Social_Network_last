@@ -1,10 +1,9 @@
 import React, {ComponentType} from 'react';
-import {InitialStateType, sendMessageAC, updateNewMessageBodyAC} from '../../redux/dialogs-reducer';
+import {InitialStateType, sendMessageAC} from '../../redux/dialogs-reducer';
 import {StateType} from '../../redux/redux-store';
 import {Dialogs} from './Dialogs';
 import {connect} from 'react-redux';
 import {compose, Dispatch} from 'redux';
-import {Redirect} from 'react-router-dom';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 type MapStateToPropsType = {
@@ -12,8 +11,8 @@ type MapStateToPropsType = {
     //isAuth:boolean
 }
 type MapDispatchToPropsType = {
-    updateNewMessageBody: (body: string) => void
-    sendMessage: () => void
+    //updateNewMessageBody: (body: string) => void
+    sendMessage: (newMessageBody: string) => void
 }
 export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
 let mapStateToProps = (state: StateType): MapStateToPropsType => {
@@ -24,15 +23,21 @@ let mapStateToProps = (state: StateType): MapStateToPropsType => {
 }
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
-        updateNewMessageBody: (body: string) => {
-            dispatch(updateNewMessageBodyAC(body))
-        },
-        sendMessage: () => {
-            dispatch(sendMessageAC())
+        sendMessage: (newMessageBody: string) => {
+            dispatch(sendMessageAC(newMessageBody))
         }
     }
 }
-
+/*let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
+    return {
+        updateNewMessageBody: (body: string) => {
+            dispatch(updateNewMessageBodyAC(body))
+        },
+        sendMessage: (newMessageBody:string) => {
+            dispatch(sendMessageAC(newMessageBody))
+        }
+    }
+}*/
 
 /*compose(
     connect(mapStateToProps,mapDispatchToProps),
