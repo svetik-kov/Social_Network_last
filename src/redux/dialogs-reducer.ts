@@ -1,9 +1,9 @@
 import React from 'react';
-import { AddPostActionType, UpdateNewPostTextActionType} from './profile-reducer';
+import { AddPostActionType} from './profile-reducer';
 import {Dispatch} from 'redux';
 import {usersAPI} from '../api/api';
 export type ActionType = AddPostActionType
-    | UpdateNewPostTextActionType
+    //| UpdateNewPostTextActionType
     //| UpdateNewMessageBodyActionType
     | SendMessageActionType
 
