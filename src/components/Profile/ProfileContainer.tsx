@@ -9,20 +9,22 @@ import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 
 type PathParamsType = {
-    userId: string
+    userId: any
 }
 type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerType
+//type PropsType = <PathParamsType> & ProfileContainerType
 
 type MapStateToPropsType = {
     profile: ProfileType,
     status: string
-    //isAuth:boolean
+    authorizedUserId:number
+    isAuth:boolean
 
 }
 type MapDispatchToPropsType = {
     //setUserProfile: (profile: ProfileType) => void
-    getUserProfile: (userId: string) => void,
-    getStatus: (userId: string) => void
+    getUserProfile: (userId: number) => void,
+    getStatus: (userId: number) => void
     updateStatus: (status: string) => void
 }
 
@@ -30,10 +32,10 @@ type ProfileContainerType = MapStateToPropsType & MapDispatchToPropsType
 
 class ProfileContainer extends React.Component<PropsType, StateType> {
     componentDidMount() {
-
+debugger
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = '23835'
+            userId = this.props.authorizedUserId
         }
         /*axios.get(`https://social-network.samuraijs.com/api/1.0/profile/ ${userId}` )*/
         this.props.getUserProfile(userId)
@@ -68,7 +70,9 @@ let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
 
 let mapStateToProps = (state: StateType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    authorizedUserId:state.auth.data.id,
+    isAuth:state.auth.isAuth
     //isAuth:state.auth.isAuth
 
 })

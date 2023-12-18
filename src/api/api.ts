@@ -20,7 +20,7 @@ export const usersAPI = {
         return instance.delete(`follow/${userId}`)
     },
 
-    getProfile(userId: string) {
+    getProfile(userId: number) {
         //console.warn('obsolete method. Please profileAPI object ')
         return profileAPI.getProfile(userId)
     }
@@ -28,10 +28,10 @@ export const usersAPI = {
 }
 
 export const profileAPI = {
-    getProfile(userId: string) {
+    getProfile(userId: number) {
         return instance.get(`profile/ ${userId}`)
     },
-    getStatus(userId: string) {
+    getStatus(userId: number) {
         return instance.get(`profile/status/${userId}`)
     },
     updateStatus(status: string) {
@@ -40,14 +40,20 @@ export const profileAPI = {
 }
 export const authAPI = {
     me() {
-        return instance.get(`auth/me`)
+        return instance.get<ResponseType< { id: number, email: string, login:string }>>(`auth/me`)
     },
     login(email: string, password:string, rememberMe: boolean=false){
-        return instance.post(`/auth/login`,{email,password,rememberMe,})
+        return instance.post<ResponseType<{ userId: number }>>(`/auth/login`,{email,password,rememberMe,})
     },
     logout(){
-        return instance.delete(`/auth/login`,)
+        return instance.delete<ResponseType>(`/auth/login`,)
     }
+}
+
+export type ResponseType<D = {}> = {
+    resultCode: number
+    messages: Array<string>
+    data: D
 }
 /*
 export const getUsers=(pageSize: number,currentPage: number)=>{
