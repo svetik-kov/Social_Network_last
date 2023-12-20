@@ -31,12 +31,17 @@ type MapDispatchToPropsType = {
 type ProfileContainerType = MapStateToPropsType & MapDispatchToPropsType
 
 class ProfileContainer extends React.Component<PropsType, StateType> {
+
     componentDidMount() {
-debugger
+
         let userId = this.props.match.params.userId
         if (!userId) {
             userId = this.props.authorizedUserId
+           /* if (!userId){
+                this.props.history.push('/login')
+            }*/
         }
+
         /*axios.get(`https://social-network.samuraijs.com/api/1.0/profile/ ${userId}` )*/
         this.props.getUserProfile(userId)
         this.props.getStatus(userId)
@@ -79,6 +84,7 @@ let mapStateToProps = (state: StateType): MapStateToPropsType => ({
 
 
 export default compose<ComponentType>(
+    withAuthRedirect,
     connect(mapStateToProps, {
         getUserProfile,
         getStatus,
