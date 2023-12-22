@@ -95,6 +95,7 @@ this.props.getUsers(this.props.pageSize,this.props.currentPage)
 const mapStateToProps = (state: StateType): InitialStateType => {
     return {
         users: getUser(state),
+        //users: getUsersSuperSelector(state),
         pageSize: getPageSize(state),
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
