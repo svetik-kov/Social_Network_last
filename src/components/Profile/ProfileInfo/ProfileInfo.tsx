@@ -3,6 +3,7 @@ import s from './ProfileInfo.module.css'
 import {ProfileType} from '../../../redux/profile-reducer';
 import {Preloader} from '../../common/Preloader';
 import ProfileStatus from './ProfileStatus';
+import ProfileStatusWithHooks from '../../../components/Profile/ProfileInfo/ProfileStatusWirhHooks';
 
 type ProfileInfoType={
     profile: ProfileType
@@ -23,7 +24,8 @@ export const ProfileInfo = (props:ProfileInfoType) => {
             <div className={s.descriptionBlock}>
                 <img src={props.profile.photos.large}/>
              {/* <ProfileStatus status={'Hello my friendK'}/>*/}
-              <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+             {/* <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>*/}
+              <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
 
             </div>
         </div>
