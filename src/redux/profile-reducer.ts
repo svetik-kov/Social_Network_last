@@ -57,7 +57,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
         case 'SET-USER-PROFILE ':
             return {...state, profile: action.profile}
         case 'SET-STATUS ':
-            return {...state, status: action.status}
+            return {...state, status:action.status}
         default:
             return state
     }

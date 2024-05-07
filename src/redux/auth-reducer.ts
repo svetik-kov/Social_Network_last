@@ -25,9 +25,10 @@ let initialState = {
         email: '',
         login: 'hello'
     },
+    id: 0,
     isAuth: false
 }
-type InitialStateType = AuthType & { isAuth: boolean }
+type InitialStateType = AuthType & { id: number | null, isAuth: boolean }
 
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionType) => {

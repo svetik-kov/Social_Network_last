@@ -1,7 +1,6 @@
 import React, {ComponentType} from 'react';
 import {StateType} from '../../redux/redux-store';
 import {Profile} from './Profile';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import {getStatus, getUserProfile, ProfileType, updateStatus} from '../../redux/profile-reducer';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
@@ -35,6 +34,8 @@ class ProfileContainer extends React.Component<PropsType, StateType> {
     componentDidMount() {
 
         let userId = this.props.match.params.userId
+
+        console.log(this.props.authorizedUserId)
         if (!userId) {
             userId = this.props.authorizedUserId
            /* if (!userId){
@@ -73,14 +74,17 @@ class ProfileContainer extends React.Component<PropsType, StateType> {
 }*/
 let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
 
-let mapStateToProps = (state: StateType): MapStateToPropsType => ({
-    profile: state.profilePage.profile,
-    status: state.profilePage.status,
-    authorizedUserId:state.auth.data.id,
-    isAuth:state.auth.isAuth
-    //isAuth:state.auth.isAuth
+let mapStateToProps = (state: StateType): MapStateToPropsType => {
+    console.log(state)
+    return {
+        authorizedUserId: state.auth.id,
+        isAuth: state.auth.isAuth,
+        profile: state.profilePage.profile,
+        status: state.profilePage.status,
+        //isAuth:state.auth.isAuth
 
-})
+    } as MapStateToPropsType
+}
 
 
 export default compose<ComponentType>(

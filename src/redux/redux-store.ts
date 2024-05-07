@@ -24,6 +24,8 @@ let reducers=combineReducers({
 
 export type StoreType=Store<StateType>
 export type StateType=ReturnType<typeof reducers>
+
+
 //export type AppDispatch = ThunkDispatch<StateType, unknown, AppActionsType>
 
 export type AppThunkDispatch = ThunkDispatch<StateType, any, AnyAction>
