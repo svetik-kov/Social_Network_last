@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
 
@@ -14,40 +14,26 @@ import {Textarea} from '../../common/FormsControls/FormsControls';
     updateNewPostText: (text: string) => void
     addPost: () => void
 }*/
+/* shouldComponentUpdate(nextProps: Readonly<MyPostType>, nextState: Readonly<{}>): boolean {
+         return nextProps !== this.props || nextState !== this.state
+     }*/
 
-export const MyPosts = (props: MyPostType) => {
-
+export const  MyPosts=memo((props: MyPostType)=> {
+    console.log('render')
     let postsElements = props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>)
 
-    let newPostElement = React.useRef<HTMLTextAreaElement>(null)
-
+      let newPostElement = React.useRef<HTMLTextAreaElement>(null)
+   /* let newPostElement = React.createRef<HTMLTextAreaElement>()*/
 
     const onAddPost = (values: any) => {
         props.addPost(values.newPostText)
-        /*if (newPostElement.current !== null) {
-            /!* props.addPost()*!/
-            /!* const action={type:'ADD-POST'} as const
-             props.dispatch(action)*!/
-            props.dispatch(addPostAC())
-        }*/
     }
-    /* const onPostChange = () => {
-         let text = newPostElement.current?.value
-         props.updateNewPostText(text!)
-     }*/
+
 
     return (
         <div className={s.postsBlock}>
 
             <h3>My posts</h3>
-            {/* <form>
-                <div>
-                    <textarea onChange={onPostChange} value={props.newPostText} ref={newPostElement}/>
-                </div>
-                <div>
-                    <button onClick={onAddPost}>Add post</button>
-                </div>
-            </form>*/}
             <AddNewPostReduxForm onSubmit={onAddPost}/>
             <div>New post</div>
             <div className={s.posts}>
@@ -55,7 +41,8 @@ export const MyPosts = (props: MyPostType) => {
             </div>
         </div>
     );
-};
+})
+
 const maxLength10 = maxLengthCreator(10)
 
 const AddNewPostForm = (props: InjectedFormProps) => {
@@ -68,10 +55,8 @@ const AddNewPostForm = (props: InjectedFormProps) => {
                     validate={[required, maxLength10]}
                     placeholder={'Post message'}
                 />
-                {/* <textarea onChange={onPostChange} value={props.newPostText} ref={newPostElement}/>*/}
             </div>
             <div>
-                {/* <button onClick={onAddPost}>Add post</button>*/}
                 <button>Add post</button>
             </div>
         </form>
