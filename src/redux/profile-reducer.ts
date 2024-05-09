@@ -3,6 +3,7 @@ import {profileAPI, usersAPI} from '../api/api';
 
 
 const ADD_POST = 'ADD-POST'
+const DELETE_POST = 'DELETE-POST'
 //const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_USER_PROFILE = 'SET-USER-PROFILE '
 const SET_STATUS = 'SET-STATUS '
@@ -51,13 +52,15 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
                 newPostText: ''
             }
         }
+        case DELETE_POST:
+            return {...state,posts: state.posts.filter(p=>p.id!==action.id)}
         /*case UPDATE_NEW_POST_TEXT: {
             return {...state, newPostText: action.newText}
         }*/
         case 'SET-USER-PROFILE ':
             return {...state, profile: action.profile}
         case 'SET-STATUS ':
-            return {...state, status:action.status}
+            return {...state, status: action.status}
         default:
             return state
     }
@@ -68,16 +71,19 @@ export type  ActionProfileReducerType = AddPostActionType
     //| UpdateNewPostTextActionType
     | SetUserProfileActionType
     | SetStatusProfileActionType
+    | DeletePostActionType
 
 
 export type AddPostActionType = ReturnType<typeof addPostAC>
+export type DeletePostActionType = ReturnType<typeof deletePostAC>
 //export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostAC>
 export type SetUserProfileActionType = ReturnType<typeof setUserProfile>
 export type SetStatusProfileActionType = ReturnType<typeof setStatusProfile>
 
-export const addPostAC = (newPostText:string) => {
+
+export const addPostAC = (newPostText: string) => {
     return {
-        type: ADD_POST,newPostText
+        type: ADD_POST, newPostText
     } as const
 }
 /*export const updateNewPostAC = (text: string) => {
@@ -85,6 +91,11 @@ export const addPostAC = (newPostText:string) => {
         type: UPDATE_NEW_POST_TEXT, newText: text
     } as const
 }*/
+export const deletePostAC = (id: number) => {
+    return {
+        type: 'DELETE-POST', id
+    } as const
+}
 const setUserProfile = (profile: ProfileType) => {
     return {
         type: SET_USER_PROFILE, profile
