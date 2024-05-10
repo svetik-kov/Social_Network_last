@@ -1,8 +1,7 @@
 import React from 'react';
 import s from './ProfileInfo.module.css'
-import {ProfileType} from '../../../redux/profile-reducer';
+import {ProfileType} from 'redux/profile-reducer';
 import {Preloader} from '../../common/Preloader';
-import ProfileStatus from './ProfileStatus';
 import ProfileStatusWithHooks from '../../../components/Profile/ProfileInfo/ProfileStatusWirhHooks';
 
 type ProfileInfoType={
@@ -10,8 +9,8 @@ type ProfileInfoType={
     status:string
     updateStatus:(status:string)=>void
 }
-export const ProfileInfo = (props:ProfileInfoType) => {
-    if (!props.profile){
+export const ProfileInfo = ({profile,status,updateStatus}:ProfileInfoType) => {
+    if (!profile){
         return <Preloader/>
     }
     return (
@@ -22,10 +21,8 @@ export const ProfileInfo = (props:ProfileInfoType) => {
                     src="https://bogatyr.club/uploads/posts/2023-02/1675444895_bogatyr-club-p-kirpichnaya-stena-raznotsvetnaya-fon-vkont-1.jpg"/>
             </div>
             <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.large}/>
-             {/* <ProfileStatus status={'Hello my friendK'}/>*/}
-             {/* <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>*/}
-              <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
+                <img src={profile.photos.large}/>
+            <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
 
             </div>
         </div>
