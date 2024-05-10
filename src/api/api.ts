@@ -8,7 +8,7 @@ const instance = axios.create({
     }
 })
 
-export const usersAPI = {
+export const usersAPI= {
     getUsers(pageSize: number, currentPage: number) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then((response) => response.data)
@@ -55,22 +55,4 @@ export type ResponseType<D = {}> = {
     messages: Array<string>
     data: D
 }
-/*
-export const getUsers=(pageSize: number,currentPage: number)=>{
-   return  instance.get(`users?page=${currentPage}&count=${pageSize}`)
-       .then((response)=>response.data)
-}
-export const followUsers=(userId: number)=>{
-    return  instance.post(`follow/${userId}`, {},)
-}
-export const unFollowUsers=(userId: number)=>{
-   return  instance.delete(`follow/${userId}`)
-}
 
-export const  getHeaders=()=>{
-return  instance.get(`auth/me` )
-}
-
-export const getProfile=(userId:string)=>{
-    return instance.get(`profile/ ${userId}` )
-}*/

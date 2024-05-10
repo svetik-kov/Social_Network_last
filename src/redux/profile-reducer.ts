@@ -129,24 +129,18 @@ export type ProfileType = {
     }
 }
 
-export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
-    usersAPI.getProfile(userId)
-        .then((response) => {
-            dispatch(setUserProfile(response.data))
-        })
-}
-export const getStatus = (userId: number) => (dispatch: Dispatch) => {
-    profileAPI.getStatus(userId)
-        .then((response) => {
+export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
+   const response=await usersAPI.getProfile(userId)
+                    dispatch(setUserProfile(response.data))
+    }
+export const getStatus = (userId: number) =>async (dispatch: Dispatch) => {
+    const response=await  profileAPI.getStatus(userId)
+
             dispatch(setStatusProfile(response.data))
-        })
 }
-export const updateStatus = (status: string) => (dispatch: Dispatch) => {
-    profileAPI.updateStatus(status)
-        .then((response) => {
+export const updateStatus = (status: string) => async (dispatch: Dispatch) => {
+    const response=await profileAPI.updateStatus(status)
             if (response.data.resultCode === 0) {
                 dispatch(setStatusProfile(status))
             }
-
-        })
 }
