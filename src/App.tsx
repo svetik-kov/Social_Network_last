@@ -1,7 +1,7 @@
 import React, {ComponentType} from 'react';
 import './App.css';
 import {Navbar} from './components/Navbar/Navbar';
-import {BrowserRouter, Route, withRouter} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
@@ -9,9 +9,9 @@ import LoginPage from './components/Login/Login';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
-import {initializeApp} from './redux/app-reducer';
-import {StateType} from './redux/redux-store';
-import {Preloader} from './components/common/Preloader';
+import {initializeApp} from 'redux/app-reducer';
+import {StateType} from 'redux/redux-store';
+import {Preloader} from 'components/common/Preloader';
 
 
 type AppType = {
@@ -33,9 +33,7 @@ class  App extends React.Component<AppType,StateType> {
             return (<Preloader/>)
         }
         return (
-            <BrowserRouter>
-
-                <div className={'app-wrapper'}>
+                        <div className={'app-wrapper'}>
                     <HeaderContainer/>
                     <Navbar/>
                     <div className={'app-wrapper-content'}>
@@ -45,7 +43,7 @@ class  App extends React.Component<AppType,StateType> {
                         <Route path={'/login'} render={() => <LoginPage/>}/>
                     </div>
                 </div>
-            </BrowserRouter>
+
         );
     }
 }

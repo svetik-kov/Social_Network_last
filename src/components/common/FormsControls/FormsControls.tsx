@@ -1,5 +1,7 @@
 import React, {ReactNode} from 'react'
 import styles from './FormsControls.module.css'
+import {maxLengthCreator, minLength12, required} from '../../../utils/validators/validators';
+import {Field} from 'redux-form';
 
 type TextAreaType = {
     input: {
@@ -30,11 +32,11 @@ type TextAreaType = {
         warning: undefined
     }
     placeholder: string
-    children:ReactNode
+    children: ReactNode
 }
 
 const FormControl = (props: TextAreaType) => {
-    const {input, meta,children, ...arg} = props
+    const {input, meta, children, ...arg} = props
     const hasError = meta.touched && meta.error
     return (
         <div className={styles.formControl + ' ' + (hasError ? styles.error : '')}>
@@ -47,37 +49,22 @@ const FormControl = (props: TextAreaType) => {
 }
 export const Textarea = (props: TextAreaType) => {
     const {input, meta, ...restProps} = props
-   return <FormControl {...props}><textarea {...input} {...restProps}/></FormControl>
+    return <FormControl {...props}><textarea {...input} {...restProps}/></FormControl>
 }
 
 export const Input = (props: TextAreaType) => {
     const {input, meta, ...restProps} = props
     return <FormControl {...props}><input {...input} {...restProps}/></FormControl>
 }
-
-/*
-export const Textarea = (props: TextAreaType) => {
-    const {input, meta, ...arg} = props
-    const hasError = meta.touched && meta.error
-    return (
-        <div className={styles.formControl + ' ' + (hasError ? styles.error : '')}>
-            <div>
-                <textarea {...input}{...arg}/>
-            </div>
-            {hasError && <span>{meta.error}</span>}
-        </div>
-    )
-}
-
-export const Input = (props: TextAreaType) => {
-    const {input, meta, ...arg} = props
-    const hasError = meta.touched && meta.error
-    return (
-        <div className={styles.formControl + ' ' + (hasError ? styles.error : '')}>
-            <div>
-                <input {...input}{...arg}/>
-            </div>
-            {hasError && <span>{meta.error}</span>}
-        </div>
-    )
-}*/
+type ValidatorFn = typeof required | typeof maxLengthCreator | typeof minLength12
+export const createField = (placeholder: string, name: string, validators: ValidatorFn[], component: (props: TextAreaType) => JSX.Element,props={},text='') =>(
+    <div>
+        <Field
+            placeholder={placeholder}
+            name={name}
+            validate={validators}
+            component={component}
+            {...props}
+        />
+        {text}
+    </div>)

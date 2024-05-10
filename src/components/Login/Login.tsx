@@ -1,11 +1,11 @@
 import React from 'react'
-import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {Input} from '../common/FormsControls/FormsControls';
-import {required} from '../../utils/validators/validators';
+import {InjectedFormProps, reduxForm} from 'redux-form';
+import {createField, Input} from '../common/FormsControls/FormsControls';
+import {required} from 'utils/validators/validators';
 import {connect} from 'react-redux';
-import {login} from '../../redux/auth-reducer';
+import {login} from 'redux/auth-reducer';
 import {Redirect} from 'react-router-dom';
-import {StateType} from '../../redux/redux-store';
+import {StateType} from 'redux/redux-store';
 import styles from '../common/FormsControls/FormsControls.module.css'
 
 type FormDataType = {
@@ -13,26 +13,30 @@ type FormDataType = {
     password: string
     rememberMe: boolean
 }
-const LoginForm = (props: InjectedFormProps<FormDataType>) => {
+
+
+const LoginForm = ({handleSubmit, error}: InjectedFormProps<FormDataType>) => {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field placeholder={'Email'}
+        <form onSubmit={handleSubmit}>
+
+            {createField('Email', 'email', [required], Input)}
+            {createField('Password', 'password', [required], Input, {type: 'password'})}
+            {createField('Password', 'rememberMe', [], Input, {type: 'checkbox'}, 'remember me')}
+            {/*<div>  <Field placeholder={'Email'}
                        name={'email'}
                        validate={[required]}
-                       component={Input}/>
-            </div>
-            <div>
+                       component={Input}/></div> */}
+            {/*  <div>
                 <Field placeholder={'Password'}
                        validate={[required]}
                        type={'password'}
                        name={'password'} component={Input}/>
-            </div>
-            <div>
+            </div>*/}
+            {/* <div>
                 <Field type={'checkbox'} name={'rememberMe'} component={Input}/> remember me
-            </div>
-            {props.error && <div className={styles.formSummaryError}>
-                {props.error}
+            </div>*/}
+            {error && <div className={styles.formSummaryError}>
+                {error}
             </div>}
             <div>
                 <button>Login</button>
