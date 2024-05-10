@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react'
 import styles from './FormsControls.module.css'
-import {maxLengthCreator, minLength12, required} from '../../../utils/validators/validators';
+import {maxLengthCreator, minLength12, required} from 'utils/validators/validators';
 import {Field} from 'redux-form';
 
 type TextAreaType = {
@@ -36,14 +36,14 @@ type TextAreaType = {
 }
 
 const FormControl = (props: TextAreaType) => {
-    const {input, meta, children, ...arg} = props
-    const hasError = meta.touched && meta.error
+    const {input, meta:{touched,error}, children, ...arg} = props
+    const hasError = touched && error
     return (
         <div className={styles.formControl + ' ' + (hasError ? styles.error : '')}>
             <div>
                 {props.children}
             </div>
-            {hasError && <span>{meta.error}</span>}
+            {hasError && <span>{error}</span>}
         </div>
     )
 }
