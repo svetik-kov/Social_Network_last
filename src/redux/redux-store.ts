@@ -7,7 +7,8 @@ import {authReducer} from './auth-reducer';
 import thunk, {ThunkDispatch} from 'redux-thunk';
 import {reducer as formReducer } from 'redux-form'
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
-import {appReducer} from '../redux/app-reducer';
+import {appReducer} from 'redux/app-reducer';
+import {composeWithDevTools} from 'redux-devtools-extension';
 
 let reducers=combineReducers({
     sidebar:sidebarReducer,
@@ -19,7 +20,9 @@ let reducers=combineReducers({
     app:appReducer
 })
 
- let store:StoreType=createStore(reducers,applyMiddleware(thunk))
+ let store:StoreType=createStore(reducers,
+     composeWithDevTools(applyMiddleware(thunk)))
+
 
 
 export type StoreType=Store<StateType>
