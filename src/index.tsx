@@ -5,15 +5,10 @@ import './index.css';
 import {BrowserRouter} from 'react-router-dom';
 import store from './redux/redux-store';
 import {Provider} from 'react-redux';
-import App from './App'
+import App, {SamuraiJSApp} from './App'
 
 ReactDOM.render(
-    <BrowserRouter>
-        <Provider store={store}>
-            <App />
-        </Provider>
-
-    </BrowserRouter>,
+    <SamuraiJSApp/>,
     document.getElementById('root')
 );
 
