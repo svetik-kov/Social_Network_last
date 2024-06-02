@@ -12,7 +12,7 @@ type PropsType = {
     followingInProgress: number[]
     users: UserType[],
     pageSize: number
-    totalUsersCount: number
+    totalItemsCount: number
     currentPage: number
 
 }
@@ -20,7 +20,7 @@ type PropsType = {
 export const Users = ({
                           users,
                           currentPage,
-                          totalUsersCount,
+                          totalItemsCount,
                           onPageChanged,
                           pageSize,
                           follow,
@@ -31,7 +31,9 @@ export const Users = ({
 
     return (
         <div>
-            <Paginator pageSize={pageSize} totalUsersCount={totalUsersCount} currentPage={currentPage}
+            <Paginator pageSize={pageSize}
+                       totalItemsCount={totalItemsCount}
+                       currentPage={currentPage}
                        onPageChanged={onPageChanged}/>
             <div>
                 {users.map(u => (<User
