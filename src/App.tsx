@@ -1,28 +1,32 @@
 import React, {ComponentType} from 'react';
 import './App.css';
-import {Navbar} from './components/Navbar/Navbar';
+import {Navbar} from 'components/Navbar/Navbar';
 import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import UsersContainer from './components/Users/UsersContainer';
-import ProfileContainer from './components/Profile/ProfileContainer';
+//import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import LoginPage from './components/Login/Login';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
+//import DialogsContainer from './components/Dialogs/DialogsContainer';
 import {connect, Provider} from 'react-redux';
 import {compose} from 'redux';
 import {initializeApp} from 'redux/app-reducer';
 import store, {StateType} from 'redux/redux-store';
 import {Preloader} from 'components/common/Preloader';
+import {withSuspense} from 'hoc/withSuspense';
 
 
 type AppType = {
-    initialized:boolean
+    initialized: boolean
     initializeApp: () => void
 }
 type MapStateToPropsType = {
     initialized: boolean
 }
 
-class  App extends React.Component<AppType,StateType> {
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'))
+
+class App extends React.Component<AppType, StateType> {
 
     componentDidMount() {
         this.props.initializeApp()
@@ -33,16 +37,18 @@ class  App extends React.Component<AppType,StateType> {
             return (<Preloader/>)
         }
         return (
-                        <div className={'app-wrapper'}>
-                    <HeaderContainer/>
-                    <Navbar/>
-                    <div className={'app-wrapper-content'}>
-                        <Route exact path={'/dialogs'} render={() => <DialogsContainer/>}/>
-                        <Route path={'/profile/:userId?'} render={() => <ProfileContainer/>}/>
-                        <Route path={'/users'} render={() => <UsersContainer/>}/>
-                        <Route path={'/login'} render={() => <LoginPage/>}/>
-                    </div>
+            <div className={'app-wrapper'}>
+                <HeaderContainer/>
+                <Navbar/>
+                <div className={'app-wrapper-content'}>
+                    {/*<Route exact path={'/dialogs'} render={()=>{
+                        return  <React.Suspense fallback={<div>{<Preloader/>}</div>}>(<DialogsContainer/>)</React.Suspense>}}/>*/}
+                    <Route exact path={'/dialogs'} render={withSuspense(() => (<DialogsContainer/>))}/>
+                    <Route path={'/profile/:userId?'} render={withSuspense(() => <ProfileContainer/>)}/>
+                    <Route path={'/users'} render={() => <UsersContainer/>}/>
+                    <Route path={'/login'} render={() => <LoginPage/>}/>
                 </div>
+            </div>
 
         );
     }
@@ -57,14 +63,14 @@ export default compose<ComponentType>(
     connect(mapStateToProps, {initializeApp}))(App)
 
 
-const  AppContainer=compose<ComponentType>(
+const AppContainer = compose<ComponentType>(
     withRouter,
     connect(mapStateToProps, {initializeApp}))(App)
 
-export const SamuraiJSApp=()=>{
+export const SamuraiJSApp = () => {
     return <BrowserRouter>
         <Provider store={store}>
-            <AppContainer />
+            <AppContainer/>
         </Provider>
 
     </BrowserRouter>
