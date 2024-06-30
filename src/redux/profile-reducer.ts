@@ -4,9 +4,9 @@ import {profileAPI, usersAPI} from '../api/api';
 
 const ADD_POST = 'ADD-POST'
 const DELETE_POST = 'DELETE-POST'
-//const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_USER_PROFILE = 'SET-USER-PROFILE '
 const SET_STATUS = 'SET-STATUS '
+const SAVE_PHOTO_SUCCESS = 'SAVE-PHOTO-SUCCESS'
 
 
 let initialState = {
@@ -53,14 +53,19 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
             }
         }
         case DELETE_POST:
-            return {...state,posts: state.posts.filter(p=>p.id!==action.id)}
-        /*case UPDATE_NEW_POST_TEXT: {
-            return {...state, newPostText: action.newText}
-        }*/
+            return {...state, posts: state.posts.filter(p => p.id !== action.id)}
         case 'SET-USER-PROFILE ':
             return {...state, profile: action.profile}
         case 'SET-STATUS ':
             return {...state, status: action.status}
+        case SAVE_PHOTO_SUCCESS:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    photos: action.photos
+                }
+            }
         default:
             return state
     }
@@ -72,13 +77,14 @@ export type  ActionProfileReducerType = AddPostActionType
     | SetUserProfileActionType
     | SetStatusProfileActionType
     | DeletePostActionType
+    | SavePhotoSuccessActionType
 
 
 export type AddPostActionType = ReturnType<typeof addPostAC>
 export type DeletePostActionType = ReturnType<typeof deletePostAC>
-//export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostAC>
 export type SetUserProfileActionType = ReturnType<typeof setUserProfile>
 export type SetStatusProfileActionType = ReturnType<typeof setStatusProfile>
+export type SavePhotoSuccessActionType = ReturnType<typeof savePhotoSuccess>
 
 
 export const addPostAC = (newPostText: string) => {
@@ -86,11 +92,7 @@ export const addPostAC = (newPostText: string) => {
         type: ADD_POST, newPostText
     } as const
 }
-/*export const updateNewPostAC = (text: string) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT, newText: text
-    } as const
-}*/
+
 export const deletePostAC = (id: number) => {
     return {
         type: 'DELETE-POST', id
@@ -106,7 +108,11 @@ const setStatusProfile = (status: string) => {
         type: SET_STATUS, status
     } as const
 }
-
+const savePhotoSuccess = (photos:SavePhoto) => {
+    return {
+        type: SAVE_PHOTO_SUCCESS, photos
+    } as const
+}
 
 export type ProfileType = {
     userId: number
@@ -130,17 +136,31 @@ export type ProfileType = {
 }
 
 export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
-   const response=await usersAPI.getProfile(userId)
-                    dispatch(setUserProfile(response.data))
-    }
-export const getStatus = (userId: number) =>async (dispatch: Dispatch) => {
-    const response=await  profileAPI.getStatus(userId)
+    const response = await usersAPI.getProfile(userId)
+    dispatch(setUserProfile(response.data))
+}
+export const getStatus = (userId: number) => async (dispatch: Dispatch) => {
+    const response = await profileAPI.getStatus(userId)
 
-            dispatch(setStatusProfile(response.data))
+    dispatch(setStatusProfile(response.data))
 }
 export const updateStatus = (status: string) => async (dispatch: Dispatch) => {
-    const response=await profileAPI.updateStatus(status)
-            if (response.data.resultCode === 0) {
-                dispatch(setStatusProfile(status))
-            }
+    const response = await profileAPI.updateStatus(status)
+    if (response.data.resultCode === 0) {
+        dispatch(setStatusProfile(status))
+    }
 }
+export const savePhoto = (file: File) => async (dispatch: Dispatch) => {
+    const response = await profileAPI.savePhoto(file)
+    if (response.data.resultCode === 0) {
+        dispatch(savePhotoSuccess(response.data.data.photos))
+    }
+}
+
+
+export type SavePhoto =
+    {
+        small: string;
+        large: string;
+    }
+
