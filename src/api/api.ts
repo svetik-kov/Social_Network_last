@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {ProfileType} from 'redux/profile-reducer';
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -20,7 +21,7 @@ export const usersAPI= {
         return instance.delete(`follow/${userId}`)
     },
 
-    getProfile(userId: number) {
+    getProfile(userId: number|null) {
         //console.warn('obsolete method. Please profileAPI object ')
         return profileAPI.getProfile(userId)
     }
@@ -28,7 +29,7 @@ export const usersAPI= {
 }
 
 export const profileAPI = {
-    getProfile(userId: number) {
+    getProfile(userId: number|null) {
         return instance.get(`profile/${userId}`)
     },
     getStatus(userId: number) {
@@ -45,7 +46,10 @@ export const profileAPI = {
                 'Content-Type':'multipart/form-data'
             }
         })
-    }
+    },
+    saveProfile(profile:ProfileType){
+        return instance.put(`profile`, profile)
+    },
 }
 export const authAPI = {
     me() {

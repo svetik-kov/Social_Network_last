@@ -19,10 +19,9 @@ import {Textarea} from '../../common/FormsControls/FormsControls';
      }*/
 
 export const  MyPosts=memo((props: MyPostType)=> {
-    console.log('render')
     let postsElements = props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>)
 
-      let newPostElement = React.useRef<HTMLTextAreaElement>(null)
+
    /* let newPostElement = React.createRef<HTMLTextAreaElement>()*/
 
     const onAddPost = (values: any) => {

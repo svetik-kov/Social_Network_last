@@ -21,14 +21,15 @@ let initialState = {
     resultCode: 0,
     messages: [],
     data: {
-        id: 0,
+        id: 0 ,
         email: '',
         login: 'hello'
     },
-    id: 0,
+    id: 0 as number|null,
     isAuth: false
 }
-type InitialStateType = AuthType & { id: number | null, isAuth: boolean }
+//type InitialStateType = AuthType & { id: number | null, isAuth: boolean }
+type InitialStateType = typeof initialState
 
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionType) => {

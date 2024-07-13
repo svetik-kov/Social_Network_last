@@ -31,8 +31,9 @@ export type StateType=ReturnType<typeof reducers>
 
 //export type AppDispatch = ThunkDispatch<StateType, unknown, AppActionsType>
 
-export type AppThunkDispatch = ThunkDispatch<StateType, any, AnyAction>
+export type AppThunkDispatch = ThunkDispatch<StateType, unknown, AnyAction>
 export const useAppDispatch = () => useDispatch<AppThunkDispatch>();
+//type AppDispatchType=ThunkDispatch<AppRootStateType, unknown, AnyAction>
 export const useAppSelector: TypedUseSelectorHook<StateType> = useSelector
 // @ts-ignore
 window.store = store;

@@ -1,5 +1,7 @@
 import {Dispatch} from 'redux';
 import {profileAPI, usersAPI} from '../api/api';
+import {AppThunkDispatch, StateType, useAppDispatch} from 'redux/redux-store';
+import {stopSubmit} from 'redux-form';
 
 
 const ADD_POST = 'ADD-POST'
@@ -7,6 +9,7 @@ const DELETE_POST = 'DELETE-POST'
 const SET_USER_PROFILE = 'SET-USER-PROFILE '
 const SET_STATUS = 'SET-STATUS '
 const SAVE_PHOTO_SUCCESS = 'SAVE-PHOTO-SUCCESS'
+const SAVE_PROFILE_SUCCESS = 'SAVE-PROFILE-SUCCESS'
 
 
 let initialState = {
@@ -66,6 +69,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
                     photos: action.photos
                 }
             }
+
         default:
             return state
     }
@@ -78,6 +82,7 @@ export type  ActionProfileReducerType = AddPostActionType
     | SetStatusProfileActionType
     | DeletePostActionType
     | SavePhotoSuccessActionType
+//| SaveProfileSuccessActionType
 
 
 export type AddPostActionType = ReturnType<typeof addPostAC>
@@ -85,6 +90,7 @@ export type DeletePostActionType = ReturnType<typeof deletePostAC>
 export type SetUserProfileActionType = ReturnType<typeof setUserProfile>
 export type SetStatusProfileActionType = ReturnType<typeof setStatusProfile>
 export type SavePhotoSuccessActionType = ReturnType<typeof savePhotoSuccess>
+//export type SaveProfileSuccessActionType = ReturnType<typeof saveProfileSuccess>
 
 
 export const addPostAC = (newPostText: string) => {
@@ -108,17 +114,23 @@ const setStatusProfile = (status: string) => {
         type: SET_STATUS, status
     } as const
 }
-const savePhotoSuccess = (photos:SavePhoto) => {
+const savePhotoSuccess = (photos: SavePhoto) => {
     return {
         type: SAVE_PHOTO_SUCCESS, photos
     } as const
 }
+/*const saveProfileSuccess = (profile: ProfileType) => {
+    return {
+        type: SAVE_PROFILE_SUCCESS, profile
+    } as const
+}*/
 
 export type ProfileType = {
     userId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
+    aboutMe: string
     contacts: {
         github: string
         vk: string
@@ -135,7 +147,7 @@ export type ProfileType = {
     }
 }
 
-export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
+export const getUserProfile = (userId: number|null) => async (dispatch: Dispatch) => {
     const response = await usersAPI.getProfile(userId)
     dispatch(setUserProfile(response.data))
 }
@@ -154,6 +166,16 @@ export const savePhoto = (file: File) => async (dispatch: Dispatch) => {
     const response = await profileAPI.savePhoto(file)
     if (response.data.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.data.photos))
+    }
+}
+export const saveProfile = (profile: ProfileType) => async (dispatch: AppThunkDispatch, getState: () => StateType) => {
+    const userId = getState().auth.id
+    const response = await profileAPI.saveProfile(profile)
+    if (response.data.resultCode === 0) {
+        dispatch(getUserProfile(userId))
+    } else {
+        dispatch(stopSubmit('edit-profile', {_error:response.data.messages[0]}))
+    //return Promise.reject(response.data.messages[0])
     }
 }
 
